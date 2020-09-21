@@ -10,6 +10,7 @@
                 :style='{backgroundColor:label.labelColor}'
                 class='label-item'
                 @click='labelInfo=label;showEditModal=true;'
+                title="edit"
             >{{ label.labelName }}</div>
             <a-icon class='label-add-icon' type="plus-square" @click="showAddModal=true"/>
         </div>

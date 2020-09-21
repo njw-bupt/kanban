@@ -9,17 +9,20 @@
                 @delete-task='$emit("delete-task",$event)'
                 @change-task='$emit("change-task",$event)'		
             ></item-card>
+            <button v-if='statusTitle==="Todo"' @click='showAddForm=true'>Add Card</button>
+            <add-form v-if='statusTitle==="Todo"' :show-add-form='showAddForm' @close-add-form='closeAddForm'></add-form>
        
     </div>
 </template>
 
 <script>
 import ItemCard from './ItemCard.vue';
+import AddForm from './AddForm.vue';
 
 export default {
     data(){
         return{
-
+            showAddForm: false
         }
     },
 	props: {
@@ -30,7 +33,8 @@ export default {
         items: Array,
     },
 	components: {
-		ItemCard
+        ItemCard,
+        AddForm
     },
     computed: {
         statusTitle: function(){
@@ -39,6 +43,12 @@ export default {
             return arr.join('');
         }
     },
+    methods: {
+        closeAddForm(){
+            this.showAddForm = false;
+            this.$emit("update-task");
+        }
+    }
 }
 </script>
 

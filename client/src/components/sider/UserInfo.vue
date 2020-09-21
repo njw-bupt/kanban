@@ -10,10 +10,10 @@
             </a>
             <a-menu slot="overlay">
                 <a-menu-item>
-                    <a href="javascript:;" @click="logout">log out</a>
+                    <a href="javascript:;" @click="logout">Sign out</a>
                 </a-menu-item>
                 <a-menu-item>
-                    <a href="javascript:;" @click="register">register</a>
+                    <a href="javascript:;" @click="register">Register</a>
                 </a-menu-item>
             </a-menu>
         </a-dropdown>
