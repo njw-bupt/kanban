@@ -9,11 +9,16 @@
                     <a-input v-model="taskInfo.taskDescription"/>
                 </a-form-model-item>  
                 <a-form-model-item label="label" prop="labelName">
-                    <a-input v-model="taskInfo.labelName"/>
-                </a-form-model-item>   
-                <a-form-model-item label="label color" prop="labelColor">
-                    <a-input type='color' v-model="taskInfo.labelColor"/>
-                </a-form-model-item>   
+                    <a-select v-model="taskInfo.labelName" placeholder="please select a label">
+                        <a-select-option 
+                            v-for="label in labels"
+                            :key="label.labelId"
+                            :value="label.labelName"
+                        >
+                            {{ label.labelName }}
+                        </a-select-option>
+                    </a-select>
+                </a-form-model-item>     
                 <a-form-model-item>
                     <a-button type="primary" @click="submit" :disabled="taskInfo.taskName===''">
                         add
@@ -41,14 +46,15 @@ export default {
                 labelName: undefined,
                 labelColor: undefined,
             },
+            labels: [],
             rules: {
                 taskName: [{ required: true, message: 'Please set the title of task', trigger: 'blur' }],
             }
         }
     },
-    // mounted(){
-    //     console.log(this.taskInfo)
-    // },
+    mounted(){
+        this.getLabels();
+    },
     methods: {
         cancelAdd(){
             this.taskInfo = {
@@ -59,12 +65,34 @@ export default {
             };       
             this.$emit('close-add-form');    
         },
+        async getLabels(){
+            let userId = this.$route.params.id;
+            try{
+                this.labels = await this.$api.label.getAllLabels({userId});
+            }catch(e){
+                if(e.message){
+                    console.log(e.message);
+                }
+            }
+        },
+        connectLabelNameWithColor(name){
+            let labelColor = "",
+                labels = this.labels;
+            for(let i=0; i<labels.length; i++){
+                if(name===labels[i].labelName){
+                    labelColor = labels[i].labelColor;
+                    break;
+                }
+            }
+            this.taskInfo.labelColor = labelColor;
+        },
         submit(){
                 let that = this;
                 let taskInfo = this.taskInfo;
                 this.$refs.newTaskForm.validate(async valid => {
                     if (valid) {
                         try{
+                            that.connectLabelNameWithColor(taskInfo.labelName);
                             taskInfo.userId = that.$route.params.id;
                             await that.$api.task.addNewTask(taskInfo);
                             that.taskInfo = {
