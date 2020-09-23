@@ -5,7 +5,6 @@
             <hr />
             <label-info></label-info>
             <hr />
-            <add-form :updateTask='updateTask'/>
         </div>
         <div class='task-manager-content'>
             <item-list 
@@ -13,6 +12,7 @@
                     v-bind:items='todoItems'
                     @delete-task='deleteTask'
                     @change-task='changeTask'
+                    @update-task='updateTask'
             ></item-list>
             <item-list  
                     status='doing'
@@ -31,13 +31,11 @@
 
 <script>
 import ItemList from './ItemList';
-import AddForm from './AddForm';
 import UserInfo from '../sider/UserInfo';
 import LabelInfo from '../sider/LabelInfo';
 export default {
     components: {
         ItemList,
-        AddForm,
         UserInfo,
         LabelInfo
     },

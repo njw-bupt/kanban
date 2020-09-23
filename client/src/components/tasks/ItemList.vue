@@ -1,6 +1,9 @@
 <template>
     <div class='item-list'>
-        <p class='item-list-title'>{{ statusTitle }}</p>
+        <div class='item-list-title'>
+            <p class='title-name'>{{ statusTitle }}</p>
+            <span v-show='statusTitle==="Todo"' @click='showAddForm=true'>+ Add Card</span>
+        </div>
             <item-card
                 v-for='(item) in items'
                 v-bind:item='item'
@@ -9,17 +12,18 @@
                 @delete-task='$emit("delete-task",$event)'
                 @change-task='$emit("change-task",$event)'		
             ></item-card>
-       
+            <add-form v-if='statusTitle==="Todo"' :show-add-form='showAddForm' @close-add-form='closeAddForm'></add-form>       
     </div>
 </template>
 
 <script>
 import ItemCard from './ItemCard.vue';
+import AddForm from './AddForm.vue';
 
 export default {
     data(){
         return{
-
+            showAddForm: false
         }
     },
 	props: {
@@ -30,7 +34,8 @@ export default {
         items: Array,
     },
 	components: {
-		ItemCard
+        ItemCard,
+        AddForm
     },
     computed: {
         statusTitle: function(){
@@ -39,6 +44,12 @@ export default {
             return arr.join('');
         }
     },
+    methods: {
+        closeAddForm(){
+            this.showAddForm = false;
+            this.$emit("update-task");
+        }
+    }
 }
 </script>
 
@@ -50,11 +61,19 @@ export default {
     flex-grow: 1;
     background-color: #dedede;
     .item-list-title{
-        font-size: 20px;
-        font-weight: 500;
-        padding-left: 10px;
         background-color: #e4e4e4;
-        line-height: 2em;
+        .title-name{
+            display: inline;
+            font-size: 20px;
+            font-weight: 500;
+            padding-left: 10px;
+            line-height: 2em;
+        }
+        span{
+            position: relative;
+            left: 50px;
+            cursor: pointer;
+        }
     }
 }
 </style>

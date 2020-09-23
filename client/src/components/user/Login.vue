@@ -1,7 +1,7 @@
 <template>
     <div class="login">
         <div class='app-icon'><a-icon type="edit" /></div>
-        <p class='login-title'>login to KanBan web</p>
+        <p class='login-title'>Sign in to KanBan Web</p>
         <a-form-model class='login-form' layout="vertical" ref="loginForm" :rules="rules" :model="userInfo" @submit="handleSubmit" @submit.native.prevent>
             <a-form-model-item prop="userName">
                 <a-input v-model="userInfo.userName" placeholder="username">
@@ -20,7 +20,7 @@
                         html-type="submit"
                         :disabled="userInfo.user === '' || userInfo.password === ''"
                     >
-                        Login
+                        sign in
                     </a-button>
                 </a-form-model-item>
                 <a-form-model-item>

@@ -4,9 +4,13 @@ const { DBError } = require('../utils/error');
 
 //数据表结构定义
 const attributes = {
+    labelId: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     labelName: {
         type: DataTypes.STRING,
-        primaryKey: true,
     },
     labelColor: {
         type: DataTypes.STRING,
@@ -45,8 +49,9 @@ class Label extends Model{
     }
 
     static async getAllLabels(userId){
+        let data = [];
         try{
-            let data = await Label.findAll({
+            data = await Label.findAll({
                 where: {
                     userId
                 }
@@ -58,10 +63,53 @@ class Label extends Model{
                 }
             });
             data.unshift(defaultLabel);
-            return data;
         }catch(e){
-            throw new DBError('DB ERROR: label table. query all labels from db.')
+            throw new DBError('DB ERROR: label table. query all labels from db.');
         }
+        return data;
+    }
+
+    static async addLabel(labelInfo){
+        let data = {};
+        try{
+            data = await Label.create(labelInfo);
+        }catch(e){
+            throw new DBError('DB ERROR: label table. add new label to db.');
+        }
+        return data;
+    }
+
+    static async editLabel(labelInfo){
+        let data = {};
+        let updateInfo = {
+            labelName: labelInfo.labelName,
+            labelColor: labelInfo.labelColor
+        }
+        try{
+            data = await Label.update(updateInfo,{
+                where: {
+                    labelId: labelInfo.labelId
+                }
+            });
+        }catch(e){
+            throw new DBError('DB ERROR: label table. edit label in db.');
+        }
+        return data;
+    }
+
+    static async deleteLabel(labelInfo){
+        let data = {};
+        let labelId = labelInfo.labelId;
+        try{
+            data = await Label.destroy({
+                where: {
+                    labelId
+                }
+            });
+        }catch(e){
+            throw new DBError('DB ERROR: label table. edit label in db.');
+        }
+        return data;
     }
 }
 
