@@ -1,5 +1,5 @@
 <template>
-     <div class='label-info222'>
+     <div class='label-info'>
         <div class='label-title'>
             <a-icon type="tags"/>
             <span>Labels</span>         
