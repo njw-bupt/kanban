@@ -15,3 +15,4 @@ export function uniqueName(data){
 export function getUserNameById(data){
     return httpRequest("GET","http://localhost:3000/getUserNameById",data);
 }
+
