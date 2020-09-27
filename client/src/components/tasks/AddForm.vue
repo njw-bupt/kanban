@@ -1,7 +1,7 @@
 <template>
     <div>
         <a-modal class='add-task-modal' v-model="showAddForm" title="Add New Task" :footer="null" :closable="false">
-            <a-form-model v-show='showAddForm' class='new-task-form' ref="newTaskForm" :model="taskInfo" :rules="rules" layout="vertical" label-align="left">
+            <a-form-model v-show='showAddForm' class='new-task-form' ref="newTaskForm" :model="taskInfo" :rules="rules" :labelCol='{span:6}' :wrapperCol='{span:10}' labelAlign='left'>
                 <a-form-model-item label="title" prop="taskName">
                     <a-input v-model="taskInfo.taskName"/>
                 </a-form-model-item>  
@@ -20,10 +20,10 @@
                     </a-select>
                 </a-form-model-item>     
                 <a-form-model-item>
-                    <a-button type="primary" @click="submit" :disabled="taskInfo.taskName===''">
+                    <a-button class='add-button' type="primary" @click="submit" :disabled="taskInfo.taskName===''">
                         add
                     </a-button>
-                    <a-button @click="cancelAdd">
+                    <a-button class='cancel-button' @click="cancelAdd">
                         cancel
                     </a-button>
                 </a-form-model-item>
@@ -114,3 +114,14 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+@import '../../scss/common.scss';
+.add-button{
+    width: $button-width;
+}
+.cancel-button{
+    margin-left: 10px;
+    width: $button-width;
+}
+</style>

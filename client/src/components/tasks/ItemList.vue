@@ -62,6 +62,7 @@ export default {
     background-color: #dedede;
     .item-list-title{
         background-color: #e4e4e4;
+        position: relative;
         .title-name{
             display: inline;
             font-size: 20px;
@@ -70,9 +71,12 @@ export default {
             line-height: 2em;
         }
         span{
-            position: relative;
-            left: 50px;
+            position: absolute;
+            right: 10px;
+            top: 10px;
             cursor: pointer;
+            font-weight: 500;
+            color: rgba(0,0,0,0.6);
         }
     }
 }

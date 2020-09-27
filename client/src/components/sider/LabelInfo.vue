@@ -50,13 +50,12 @@
                         <a-button
                             type="primary"
                             html-type="submit"
+                            class='submit-button'
                         >
                             edit
                         </a-button>
-                    </a-form-model-item>         
-                    <a-form-model-item>
-                        <a-button @click='deleteLabel'>delete</a-button>
-                    </a-form-model-item>         
+                        <a-button class='delete-button' @click='deleteLabel'>delete</a-button>
+                    </a-form-model-item>                
                 </a-form-model>
             </a-modal>
         </div>
@@ -157,6 +156,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../scss/common.scss';
     .label-info{
         padding: 5px 5px;
         .label-title{
@@ -181,6 +181,15 @@ export default {
                 color: rgba(0,0,0,0.4);
                 display: flex;
                 align-items: center;
+            }
+        }
+        .edit-label-modal{
+            .submit-button{
+                width: $button-width;
+            }
+            .delete-button{
+                margin-left: 10px;
+                width: $button-width;
             }
         }
     }
