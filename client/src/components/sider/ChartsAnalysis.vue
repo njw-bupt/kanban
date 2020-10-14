@@ -5,32 +5,75 @@
             <span>Charts</span>         
         </div>
 
-        <div class='chart-canvas' ref="background"></div>
+        <div class='chart-canvas' ref="labelAnalysisBackground"></div>
     </div>
 </template>
 
 <script>
 export default {
+    data(){
+        return{
+            allTasks: [],
+            labels: []
+        }
+    },
     mounted(){
-        this.drawStatusPie();
+        let that = this;
+        Promise.all([that.getAllLabels(), that.getAllTasks()]).then(()=>{
+            that.drawLabelAnalysis();
+        }) 
     },
     methods: {
-        drawStatusPie(){
-            //let that = this;
-            //let chart = this.$echarts.init(that.$refs.background);
-            // chart.setOption({
-            //     title: { text: '在Vue中使用echarts' },
-            //     tooltip: {},
-            //     xAxis: {
-            //         data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-            //     },
-            //     yAxis: {},
-            //     series: [{
-            //         name: '销量',
-            //         type: 'bar',
-            //         data: [5, 20, 36, 10, 10, 20]
-            //     }]
-            // });
+        async getAllTasks(){
+            let userId = this.$route.params.id;
+            try{
+                this.allTasks = await this.$api.task.getAllTasks({userId});
+            }catch(e){
+                alert(e);
+            }
+        },
+        async getAllLabels(){
+            let userId = this.$route.params.id;
+            try{
+                this.labels = await this.$api.label.getAllLabels({userId});
+            }catch(e){
+                alert(e.message);
+            }
+        },
+        async drawLabelAnalysis(){
+            let that = this;
+
+            let labelInfo = this.labels.map((item=>{
+                let count = that.allTasks.filter((task)=>{
+                    return task.labelName === item.labelName;
+                }).length;
+                let obj = {
+                    name: item.labelName,
+                    value: count,
+                    itemStyle:{
+                        color: item.labelColor
+                    }
+                }
+                return obj;
+            }))
+            //console.log('labelInfo',labelInfo);
+            
+            let chart = this.$echarts.init(that.$refs.labelAnalysisBackground);
+            chart.setOption({
+                title: { 
+                    text: 'Label Analysis',
+                    textStyle: {
+                        fontSize: 12,
+                    }
+                },
+                series : [
+                    {
+                        type: 'pie',
+                        radius: '40%',
+                        data: labelInfo
+                    }
+                ]
+            });
         }
     }
 }
@@ -46,7 +89,7 @@ export default {
             }
     }
     .chart-canvas{
-        height: 100px;
+        height: 200px;
     }
 }
 </style>
