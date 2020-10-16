@@ -1,22 +1,24 @@
 <template>
     <div class='user-info'>
-        <div>
-            <a-icon type="user"/>
-            <span class='user-name'>{{ userName }}</span>         
+        <div class='user-info-title'>
+            <div>
+                <a-icon type="user"/>
+                <span class='user-name'>{{ userName }}</span>         
+            </div>
+            <a-dropdown>
+                <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                    <a-icon type="setting" :style="{color: '#000'}"/>
+                </a>
+                <a-menu slot="overlay">
+                    <a-menu-item>
+                        <a href="javascript:;" @click="logout">Sign out</a>
+                    </a-menu-item>
+                    <a-menu-item>
+                        <a href="javascript:;" @click="register">Register</a>
+                    </a-menu-item>
+                </a-menu>
+            </a-dropdown>
         </div>
-        <a-dropdown>
-            <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                <a-icon type="setting" :style="{color: '#000'}"/>
-            </a>
-            <a-menu slot="overlay">
-                <a-menu-item>
-                    <a href="javascript:;" @click="logout">Sign out</a>
-                </a-menu-item>
-                <a-menu-item>
-                    <a href="javascript:;" @click="register">Register</a>
-                </a-menu-item>
-            </a-menu>
-        </a-dropdown>
     </div>
 </template>
 
@@ -53,13 +55,16 @@ export default {
 <style lang="scss" scoped>
     @import '../../scss/common.scss';
     .user-info {
-        font-size: $text-font-size;
         padding: 5px 5px;
-        display: flex;
-        justify-content: space-between;
-        .user-name {
-            margin-left: 3px;
-            font-weight: 600;
+        .user-info-title{
+            font-size: $text-font-size;
+            padding: 5px 5px;
+            display: flex;
+            justify-content: space-between;
+            .user-name {
+                margin-left: 3px;
+                font-weight: 600;
+            }
         }
     }
 </style>

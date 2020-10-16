@@ -5,6 +5,7 @@
             <hr />
             <label-info></label-info>
             <hr />
+            <charts-analysis></charts-analysis>
         </div>
         <div class='task-manager-content'>
             <item-list 
@@ -33,11 +34,13 @@
 import ItemList from './ItemList';
 import UserInfo from '../sider/UserInfo';
 import LabelInfo from '../sider/LabelInfo';
+import ChartsAnalysis from '../sider/ChartsAnalysis';
 export default {
     components: {
         ItemList,
         UserInfo,
-        LabelInfo
+        LabelInfo,
+        ChartsAnalysis
     },
     data(){
         return {

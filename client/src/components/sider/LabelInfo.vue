@@ -1,8 +1,13 @@
 <template>
      <div class='label-info'>
         <div class='label-title'>
-            <a-icon type="tags"/>
-            <span>Labels</span>         
+            <div>
+                <a-icon type="tags"/>
+                <span>Labels</span> 
+            </div>
+            <div>
+                <a-icon type="plus-square" @click="showAddModal=true"/> 
+            </div>       
         </div>
         <div class='label-area'>
             <div v-for='label in labels' 
@@ -12,7 +17,6 @@
                 @click='labelInfo=label;showEditModal=true;'
                 title="edit"
             >{{ label.labelName }}</div>
-            <a-icon class='label-add-icon' type="plus-square" @click="showAddModal=true"/>
         </div>
 
         <!-- add label model -->
@@ -160,6 +164,10 @@ export default {
     .label-info{
         padding: 5px 5px;
         .label-title{
+            font-size: $text-font-size;
+            padding: 5px 5px;
+            display: flex;
+            justify-content: space-between;
             span{
                 margin-left: 3px;
                 font-weight: 600;
@@ -175,12 +183,6 @@ export default {
                 border-radius: 5%;
                 margin: 1px 2px;
                 cursor: pointer;
-            }
-            .label-add-icon{
-                font-size: 25px;
-                color: rgba(0,0,0,0.4);
-                display: flex;
-                align-items: center;
             }
         }
         .edit-label-modal{
