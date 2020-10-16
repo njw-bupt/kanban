@@ -1,11 +1,17 @@
 <template>
     <div class='charts-info'>
         <div class='charts-title'>
-            <a-icon type="pie-chart" />
-            <span>Charts</span>         
+            <div>
+                <a-icon type="pie-chart" />
+                <span>Charts</span> 
+            </div>
+            <div>
+                <a-icon type="sync" @click='drawCharts' /> 
+            </div>                
         </div>
 
         <div class='chart-canvas' ref="labelAnalysisBackground"></div>
+        <div class='chart-canvas' ref="statusAnalysisBackground"></div>
     </div>
 </template>
 
@@ -18,12 +24,16 @@ export default {
         }
     },
     mounted(){
-        let that = this;
-        Promise.all([that.getAllLabels(), that.getAllTasks()]).then(()=>{
-            that.drawLabelAnalysis();
-        }) 
+        this.drawCharts();
     },
     methods: {
+        drawCharts(){
+            let that = this;
+            Promise.all([that.getAllLabels(), that.getAllTasks()]).then(()=>{
+                that.drawLabelAnalysis();
+                that.drawStatusAnalysis();
+            }) 
+        },
         async getAllTasks(){
             let userId = this.$route.params.id;
             try{
@@ -56,8 +66,7 @@ export default {
                 }
                 return obj;
             }))
-            //console.log('labelInfo',labelInfo);
-            
+            //console.log('labelInfo',labelInfo);          
             let chart = this.$echarts.init(that.$refs.labelAnalysisBackground);
             chart.setOption({
                 title: { 
@@ -74,15 +83,54 @@ export default {
                     }
                 ]
             });
+        },
+        async drawStatusAnalysis(){
+            let that = this;
+            let taskStatusInfo = new Map();
+            this.allTasks.forEach(task=>{
+                let count = taskStatusInfo.has(task.taskStatus)?taskStatusInfo.get(task.taskStatus)+1:1;
+                taskStatusInfo.set(task.taskStatus,count);
+            })
+            //console.log('tasks:',taskStatusInfo);
+            let taskStatusCount = [];
+            for(let [status,count] of taskStatusInfo){
+                let obj = {
+                    name: status,
+                    value: count
+                }
+                taskStatusCount.push(obj);
+            }
+
+            let chart = this.$echarts.init(that.$refs.statusAnalysisBackground);
+            chart.setOption({
+                title: { 
+                    text: 'Task Status Analysis',
+                    textStyle: {
+                        fontSize: 12,
+                    }
+                },
+                series : [
+                    {
+                        type: 'pie',
+                        radius: '40%',
+                        data: taskStatusCount
+                    }
+                ]
+            });
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '../../scss/common.scss';
 .charts-info{
     padding: 5px 5px;
     .charts-title{
+        font-size: $text-font-size;
+        padding: 5px 5px;
+        display: flex;
+        justify-content: space-between;
         span{
             margin-left: 3px;
             font-weight: 600;
