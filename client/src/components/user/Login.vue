@@ -56,13 +56,15 @@
                     if (valid) {
                         try{
                             let res = await that.$api.user.login(userInfo);
-                            window.localStorage.setItem('token',res.token);
-                            router.push({path:`/tasks/${res.userId}`})
+                            if(res.token && res.userId){
+                                window.localStorage.setItem('token',res.token);
+                                router.push({path:`/tasks/${res.userId}`});
+                            }
                         }catch(e){
-                            alert('request error',e)
+                            alert(e.message)
                         }                                   
                     } else {
-                        console.log('error submit!!');
+                        alert('please full the form');
                         return false;
                     }
                 });

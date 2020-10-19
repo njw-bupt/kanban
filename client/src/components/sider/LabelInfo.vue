@@ -6,7 +6,7 @@
                 <span>Labels</span> 
             </div>
             <div>
-                <a-icon type="plus-square" @click="showAddModal=true"/> 
+                <a-icon type="file-add" @click="showAddModal=true"/>
             </div>       
         </div>
         <div class='label-area'>
