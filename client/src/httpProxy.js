@@ -3,6 +3,7 @@ export default async function(method, url, data){
     let token = window.localStorage.getItem('token');
 
     let response = '';
+    let network = true;
     try{
         response = await new Promise((resolve,reject)=>{
             let handler = function() {
@@ -53,19 +54,22 @@ export default async function(method, url, data){
             
         })    
         }catch(e){
-            alert(e.message); //http状态码error
+            network = false;
+            throw new Error("network fail");
         }
 
-        response = JSON.parse(response);
-        switch(response.code){
-            case 200:
-                return response.data;
-            case 403:
-                //跳转登录页面
-                window.location.assign("http://localhost:8080/#/login");
-                return {};
-            default:
-                alert(response.message); //后台操作的error，有自定义的code和message
-                return {};
+        if(network){
+            response = JSON.parse(response);
+            switch(response.code){
+                case 200:
+                    return response.data;
+                case 403:
+                    //跳转登录页面
+                    window.location.assign("http://localhost:8080/#/login");
+                    return {};
+                default:
+                    //alert(response.message); //后台操作的error，有自定义的code和message
+                    return {};
+            }
         }
 }

@@ -70,7 +70,7 @@ export default {
             try{
                 this.allTasks = await this.$api.task.getAllTasks({userId});
             }catch(e){
-                alert(e);
+                //alert(e);
             }
         },
         async deleteTask(taskId){
@@ -79,7 +79,7 @@ export default {
                 await this.$api.task.deleteTask({userId, taskId});
                 this.getAllTasks();
             }catch(e){
-                alert(e);
+                //alert(e);
             }
         },
         async changeTask(task){
@@ -101,7 +101,7 @@ export default {
                 await this.$api.task.updateTask({userId, taskId, updateInfo});
                 this.getAllTasks();
             }catch(e){
-                alert(e);
+                //alert(e);
             }
         }
     },
