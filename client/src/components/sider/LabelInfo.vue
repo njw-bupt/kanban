@@ -97,7 +97,7 @@ export default {
             try{
                 this.labels = await this.$api.label.getAllLabels({userId});
             }catch(e){
-                alert(e.message);
+                //alert(e.message);
             }
         },
         submit(){

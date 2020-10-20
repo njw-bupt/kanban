@@ -14,6 +14,10 @@ export default [
     {
       path: '/tasks/:id',
       component: TaskManager
+    },
+    {
+      path: '*',
+      redirect: '/login'
     }
 ];
 

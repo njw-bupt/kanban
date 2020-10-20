@@ -39,7 +39,7 @@ export default {
             try{
                 this.allTasks = await this.$api.task.getAllTasks({userId});
             }catch(e){
-                alert(e);
+                //alert(e);
             }
         },
         async getAllLabels(){
@@ -47,7 +47,7 @@ export default {
             try{
                 this.labels = await this.$api.label.getAllLabels({userId});
             }catch(e){
-                alert(e.message);
+                //alert(e.message);
             }
         },
         async drawLabelAnalysis(){

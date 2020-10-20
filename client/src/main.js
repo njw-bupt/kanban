@@ -16,7 +16,7 @@ Vue.use(Antd);
 Vue.prototype.$echarts = echarts
 Vue.prototype.$api = api;
 
-const router = new VueRouter({routes});
+const router = new VueRouter({mode: 'history', routes});
 
 new Vue({
   router,

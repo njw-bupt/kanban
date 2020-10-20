@@ -39,7 +39,7 @@ export default {
             try {
                 this.userName = await this.$api.user.getUserNameById({userId});
             }catch(e){
-                alert(e.message);
+                //alert(e.message);
             }
         },
         logout(){
