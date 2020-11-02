@@ -55,6 +55,9 @@ export default {
     mounted(){
         this.getLabels();
     },
+    updated(){
+        this.getLabels();
+    },
     methods: {
         cancelAdd(){
             this.taskInfo = {
