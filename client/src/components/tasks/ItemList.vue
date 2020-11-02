@@ -2,7 +2,7 @@
     <div class='item-list'>
         <div class='item-list-title'>
             <p class='title-name'>{{ statusTitle }}</p>
-            <span v-show='statusTitle==="Todo"' @click='showAddForm=true'>+ Add Card</span>
+            <span v-if='statusTitle==="Todo"' @click='showAddForm=true'>+ Add Card</span>
         </div>
             <item-card
                 v-for='(item) in items'
