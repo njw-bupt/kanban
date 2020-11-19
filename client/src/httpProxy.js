@@ -1,3 +1,10 @@
+// import axios from 'axios';
+
+// export default async function(method,url,data){
+
+// }
+
+
 export default async function(method, url, data){
     //获取token
     let token = window.localStorage.getItem('token');
@@ -68,7 +75,7 @@ export default async function(method, url, data){
                     window.location.assign("http://localhost:8080/#/login");
                     return {};
                 default:
-                    //alert(response.message); //后台操作的error，有自定义的code和message
+                    alert(response.message); //后台操作的error，有自定义的code和message
                     return {};
             }
         }
