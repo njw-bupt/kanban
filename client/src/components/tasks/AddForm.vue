@@ -56,7 +56,7 @@ export default {
         this.getLabels();
     },
     updated(){
-        this.getLabels();
+        //this.getLabels();
     },
     methods: {
         cancelAdd(){
